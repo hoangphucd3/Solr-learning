@@ -116,3 +116,23 @@ The ability to search for terms that fall between known values.
 For examples: Match documents created in the six
 months between February 2, 2012, and August 2, 2012.
 
+#### FUZZY/EDIT-DISTANCE SEARCHING
+
+Solr achieves these fuzzy edit-distance searches through the use of the tilde (~)
+character
+
+- Query: `administrator~` Matches: adminstrator, administrater, administratior, and
+so forth
+
+#### PROXIMITY SEARCHING
+
+- Query: "chief officer"~1
+  - Meaning: chief and officer must be a maximum of one position away.
+  - Examples: "chief executive officer", "chief financial officer".
+
+- Query: "chief officer"~2
+  - Meaning: chief and officer must be a maximum of two edit distances away.
+  - Examples: "chief business development officer", "officer chief"
+
+- Query: "chief officer"~N
+  – Meaning: Finds chief within N positions of officer.
