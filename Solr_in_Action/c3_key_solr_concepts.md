@@ -135,4 +135,13 @@ so forth
   - Examples: "chief business development officer", "officer chief"
 
 - Query: "chief officer"~N
-  – Meaning: Finds chief within N positions of officer.
+  - Meaning: Finds chief within N positions of officer.
+
+### Relevancy
+
+#### Boosting
+
+Query-time boosting:
+
+- Query: `title:(solr in action)^2.5 description:(solr in action)`
+
