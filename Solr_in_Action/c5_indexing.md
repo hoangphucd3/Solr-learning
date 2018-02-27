@@ -40,3 +40,24 @@ See page 128 for more details.
 You can’t formulate queries
 to find a match in all string fields by querying with a prefix or suffix pattern:
 *_s:coffee
+
+#### Copy fields
+Copy fields allow you to populate one field from one or more other fields.
+Copy fields support two use cases that are common:
+
+- Populate a single catch-all field with the contents of multiple fields.
+- Apply different text analysis to the same field content to create a new searchable
+field
+
+```
+<field name="catch_all"
+ type="text_en"
+ indexed="true"
+ stored="false"
+ multiValued="true"/>
+```
+
+- The catch-all field shouldn’t be stored as it’s populated from another field.
+- Destination field must be multivalued if any of the source fields are multivalued.
+
+See Listing 5.7
