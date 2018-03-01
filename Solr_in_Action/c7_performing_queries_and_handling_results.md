@@ -73,3 +73,74 @@ parameter inside a set of local params:
 ```
 /select?q={!type=edismax qf="title^10 text" q.op=AND}hello world
 ```
+
+`{!type=edismax …}` and `{!edismax …} `. Both of these work because type is considered the default local param key if only a
+value is specified
+
+#### PARAMETER DEREFERENCING
+
+The ability to substitute arbitrary variables into your query.
+
+```
+/select?q={!edismax v=$userQuery}&userQuery="hello world"
+```
+
+## Queries and filters
+
+### The fq and q parameters
+
+The `fq` parameter stands for filter => put machine-generated filters (such as category:"technology")
+
+the `q` parameter stands for query => put user keywords (such as keywords:"apache solr")
+
+## 7.4 The default query parser (Lucene query parser)
+
+### FIELDED TERM SEARCHES
+
+```
+title:solr
+title:"apache solr" content:(search engine)
+```
+
+### SPECIAL CHARACTER ESCAPING
+
+In Solr, these characters include:
+
+```
++ - && || ! ( ) { } [ ] ^ " ~ * ? : /
+```
+
+## 7.5 Handling user queries (eDisMax query parser)
+
+Extended Disjunction Maximum (eDisMax)
+
+### 7.5.3 Searching across multiple fields
+
+With the Lucene query parser, you would have to construct a query
+for Solr in Action to look something like this:
+
+```
+(((title:solr) OR (description:solr) OR (author:solr)) AND ((title:in) OR
+(description:in) OR (author:in)) AND ((title:action) OR (description:action)
+OR (author:action)))
+```
+
+the eDisMax query parser can do this for you with ease
+
+```
+q=solr in action&qf=title description author
+```
+
+You can assign different boosts to each field if you want:
+
+```
+q=solr in action&qf=title^1.5 description author^3
+```
+
+See Figure 7.4 demonstrates how this kind of boosted field search works
+
+### 7.5.4 Boosting queries and phrases
+
+#### THE PF (PHRASE FIELDS), PF2, AND PF3 PARAMETERS
+
+uses the same format as the `qf `
